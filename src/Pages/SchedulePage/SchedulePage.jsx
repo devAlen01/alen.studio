@@ -3,57 +3,22 @@ import { useAniContext } from "../../context/AniContext";
 import TitleCard from "../TitlesPage/TitleCard";
 import { API } from "../../API/api";
 import axios from "axios";
+import Search from "../../components/Search/Search";
 
 const SchedulePage = () => {
   const { schedule, feed } = useAniContext();
   const [searchAnime, setSearchAnime] = useState("");
-  const [title, setTitle] = useState([]);
 
   const newAnime = schedule?.map((el) => el.list);
-
-  async function getSearchTitles() {
-    let { data } = await axios.get(`${API}/title/search`, {
-      params: {
-        search: searchAnime,
-        items_per_page: 10,
-      },
-    });
-
-    setSearchAnime(data);
-    setTitle(data?.list);
-  }
 
   return (
     <>
       {newAnime.length ? (
         <div className=" flex justify-center items-center flex-col">
-          <div className="flex flex-col justify-center items-center py-4">
-            <form className="py-8">
-              <input
-                className="w-[500px] py-[10px] px-[40px] rounded-xl text-slate-900"
-                onChange={(e) => setSearchAnime(e.target.value)}
-                type="text"
-                placeholder="Поиск..."
-              />
-              <button
-                className="text-white border-2 py-[9px] px-[40px] mx-2 rounded-xl"
-                onClick={(e) => {
-                  e.preventDefault();
-                  getSearchTitles();
-                  setSearchAnime("");
-                }}
-              >
-                Поиск
-              </button>
-            </form>
-
-            <div className="flex flex-wrap w-full gap-[30px]">
-              {title?.map((el, index) => (
-                <TitleCard key={index} el={el} />
-              ))}
-            </div>
-          </div>
-          <h1 className="text-3xl text-center py-8">Новые эпизоды</h1>
+          <Search />
+          <h1 className="text-3xl text-center py-[10px] px-[90px] my-2 bg-slate-600 rounded-2xl">
+            Новые эпизоды
+          </h1>
           <div className="flex justify-center items-center flex-wrap gap-[30px]">
             {feed.map((newEpi, index) => (
               <TitleCard key={index} el={newEpi.title} />
@@ -61,9 +26,11 @@ const SchedulePage = () => {
           </div>
 
           <div className="">
-            <h1 className="text-3xl text-center">Расписание релизов </h1>
+            <h1 className="text-3xl text-center py-[10px] px-[90px] my-2 bg-slate-600 rounded-2xl">
+              Расписание релизов{" "}
+            </h1>
             <div className="py-4">
-              <h1 className="text-2xl text-center bg-red-500 rounded-2xl">
+              <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Понедельник
               </h1>
               <div className="flex flex-wrap gap-[20px]">
@@ -73,7 +40,7 @@ const SchedulePage = () => {
               </div>
             </div>
             <div className="py-4">
-              <h1 className="text-2xl text-center bg-red-500 rounded-2xl">
+              <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Вторник
               </h1>
               <div className="flex flex-wrap gap-[30px]">
@@ -83,7 +50,7 @@ const SchedulePage = () => {
               </div>
             </div>
             <div className="py-4">
-              <h1 className="text-2xl text-center bg-red-500 rounded-2xl">
+              <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Среда
               </h1>
               <div className="flex flex-wrap gap-[30px]">
@@ -93,7 +60,7 @@ const SchedulePage = () => {
               </div>
             </div>
             <div className="py-4">
-              <h1 className="text-2xl text-center bg-red-500 rounded-2xl">
+              <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Четверг
               </h1>
               <div className="flex flex-wrap gap-[30px]">
@@ -103,7 +70,7 @@ const SchedulePage = () => {
               </div>
             </div>
             <div className="py-4">
-              <h1 className="text-2xl text-center bg-red-500 rounded-2xl">
+              <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Пятница
               </h1>
               <div className="flex flex-wrap gap-[30px]">
@@ -113,7 +80,7 @@ const SchedulePage = () => {
               </div>
             </div>
             <div className="py-4">
-              <h1 className="text-2xl text-center bg-red-500 rounded-2xl">
+              <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Суббота
               </h1>
               <div className="flex flex-wrap gap-[30px]">
@@ -123,7 +90,7 @@ const SchedulePage = () => {
               </div>
             </div>
             <div className="py-4">
-              <h1 className="text-2xl text-center bg-red-500 rounded-2xl">
+              <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Воскресенье
               </h1>
               <div className="flex flex-wrap gap-[30px]">

@@ -6,7 +6,7 @@ const TitleCard = ({ el }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="">
+    <div className="bg-slate-700/90 rounded-xl hover:bg-red-800">
       {el !== undefined ? (
         <div
           onClick={() => navigate(`/title/${el?.code}`)}
@@ -18,7 +18,7 @@ const TitleCard = ({ el }) => {
             alt={el?.names?.ru}
           />
 
-          <h2 className="text-center py-[6px]  px-[3px] mt-[5px] w-[190px] h-[100px] flex-col">
+          <h2 className="text-center py-[6px]  px-[3px] mt-[5px] w-[190px] h-[80px] truncate flex-col text-wrap ">
             {el?.names?.ru}
           </h2>
         </div>

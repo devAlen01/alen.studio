@@ -2,6 +2,7 @@ import ResponsivePagination from "react-responsive-pagination";
 import "react-responsive-pagination/themes/classic.css";
 import TitleCard from "./TitleCard";
 import { useAniContext } from "../../context/AniContext";
+import Search from "../../components/Search/Search";
 
 const TitlesPage = () => {
   const { titles, pagination, setActivePage, activePage } = useAniContext();
@@ -12,6 +13,8 @@ const TitlesPage = () => {
 
   return (
     <div className=" flex flex-col justify-items-center items-center my-[30px]">
+      <Search />
+
       {titles.length ? (
         <>
           <div className="  flex items-center justify-center gap-[30px] flex-wrap">

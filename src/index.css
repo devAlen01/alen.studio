@@ -7,8 +7,7 @@ body,
 #root {
   @apply min-w-full min-h-full bg-slate-400/15 overflow-x-hidden text-white;
 
-  background: url("https://w0.peakpx.com/wallpaper/33/7/HD-wallpaper-anime-crossover.jpg")
-    center/cover;
+  background: url("https://wallpaper.dog/large/5467670.jpg") center/cover;
   background-repeat: repeat-y;
   height: 100%;
   top: 0;

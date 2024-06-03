@@ -5,7 +5,7 @@
 html,
 body,
 #root {
-  @apply min-w-full min-h-full overflow-x-hidden bg-blue-950 text-white;
+  @apply min-w-full min-h-full bg-slate-900 overflow-x-hidden text-white;
 }
 
 .container {

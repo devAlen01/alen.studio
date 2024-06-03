@@ -10,7 +10,7 @@ const DetailPage = () => {
   const navigate = useNavigate();
   const { code } = useParams();
 
-  const [video, setVideo] = useState("fhd");
+  const [video, setVideo] = useState("sd");
 
   useEffect(() => {
     getTitle(code);
@@ -87,9 +87,9 @@ const DetailPage = () => {
                 onChange={(e) => setVideo(e.target.value)}
                 className="bg-purple-800 rounded-lg p-2"
               >
+                <option value="sd">SD</option>
                 <option value="fhd">FHD</option>
                 <option value="hd">HD</option>
-                <option value="sd">SD</option>
               </select>
             </div>
             <div className=" pb-[40px]">

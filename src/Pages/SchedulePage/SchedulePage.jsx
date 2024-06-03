@@ -25,33 +25,34 @@ const SchedulePage = () => {
 
   return (
     <>
-      <div className="text-slate-950">
-        <form>
-          <input
-            onChange={(e) => setSearchAnime(e.target.value)}
-            value={searchAnime}
-            type="text"
-            placeholder="search..."
-          />
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              getSearchTitles();
-              setSearchAnime("");
-            }}
-          >
-            Search
-          </button>
-        </form>
+      {newAnime.length ? (
+        <div className=" flex justify-center items-center flex-col">
+          <div className="flex flex-col justify-center items-center py-4">
+            <form className="py-8">
+              <input
+                className="w-[500px] py-[10px] px-[40px] rounded-xl text-slate-900"
+                onChange={(e) => setSearchAnime(e.target.value)}
+                type="text"
+                placeholder="Поиск..."
+              />
+              <button
+                className="text-white border-2 py-[9px] px-[40px] mx-2 rounded-xl"
+                onClick={(e) => {
+                  e.preventDefault();
+                  getSearchTitles();
+                  setSearchAnime("");
+                }}
+              >
+                Поиск
+              </button>
+            </form>
 
-        <div className="">
-          {title?.map((el, index) => (
-            <TitleCard key={index} el={el} />
-          ))}
-        </div>
-      </div>
-      {newAnime ? (
-        <div className="">
+            <div className="flex flex-wrap w-full gap-[30px]">
+              {title?.map((el, index) => (
+                <TitleCard key={index} el={el} />
+              ))}
+            </div>
+          </div>
           <h1 className="text-3xl text-center py-8">Новые эпизоды</h1>
           <div className="flex justify-center items-center flex-wrap gap-[30px]">
             {feed.map((newEpi, index) => (

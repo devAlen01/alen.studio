@@ -14,39 +14,83 @@ const AniContextProvider = ({ children }) => {
   const [episode, setEpisode] = useState(null);
   const [schedule, setSchedule] = useState([]);
   const [feed, setFeed] = useState([]);
-  const [searchAnime, setSearchAnime] = useState([]);
+  const [searchAnime, setSearchAnime] = useState("");
+  const [titleSearch, setTitleSearch] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function getTitles() {
-    let { data } = await axios.get(`${API}/title/updates`, {
-      params: {
-        items_per_page: 30,
-        page: activePage,
-      },
-    });
-    setTitles(data.list);
-    setPagination(data.pagination);
+    setLoading(true);
+    try {
+      let { data } = await axios.get(`${API}/title/updates`, {
+        params: {
+          items_per_page: 15,
+          page: activePage,
+        },
+      });
+      setTitles(data.list);
+      setPagination(data.pagination);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function getTitle(code) {
-    let { data } = await axios.get(`${API}/title?code=${code}`);
-    let animeList = data.player.list ? Object.values(data.player.list) : [];
-    setTitle(data);
-    setEpisode(animeList);
+    setLoading(true);
+    try {
+      let { data } = await axios.get(`${API}/title?code=${code}`);
+      let animeList = data.player.list ? Object.values(data.player.list) : [];
+      setTitle(data);
+      setEpisode(animeList);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function getSchedule() {
-    let { data } = await axios.get(`${API}/title/schedule`);
-    setSchedule(data);
+    setLoading(true);
+    try {
+      let { data } = await axios.get(`${API}/title/schedule`);
+      setSchedule(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function getFeed() {
-    let { data } = await axios.get(`${API}/feed `);
-    setFeed(data?.list);
+    setLoading(true);
+    try {
+      let { data } = await axios.get(`${API}/feed`);
+      setFeed(data?.list);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function getSearchTitles() {
-    let { data } = await axios.get(`${API}/title/search`);
-    setSearchAnime(data);
+    setLoading(true);
+    try {
+      let { data } = await axios.get(`${API}/title/search`, {
+        params: {
+          search: searchAnime,
+          items_per_page: 10,
+        },
+      });
+      setSearchAnime(data);
+      setTitleSearch(data?.list);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -73,6 +117,10 @@ const AniContextProvider = ({ children }) => {
     getSchedule,
     schedule,
     feed,
+    titleSearch,
+    getSearchTitles,
+    setSearchAnime,
+    loading,
   };
 
   return (

@@ -1,17 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 html,
 body,
 #root {
   @apply min-w-full min-h-full bg-slate-400/15 overflow-x-hidden text-white;
 
-  background: url("https://wallpaper.dog/large/5467670.jpg") center/cover;
+  background: url("https://kartinki.pics/pics/uploads/posts/2022-08/thumbs/1661282329_4-kartinkin-net-p-temnii-gradient-oboi-krasivo-6.jpg")
+    center/cover;
   background-repeat: repeat-y;
   height: 100%;
   top: 0;
   /* color: #000 !important; */
+
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
 }
 
 .container {

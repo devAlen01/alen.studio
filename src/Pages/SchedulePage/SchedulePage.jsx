@@ -1,15 +1,16 @@
-import { useState } from "react";
 import { useAniContext } from "../../context/AniContext";
 import TitleCard from "../TitlesPage/TitleCard";
-import { API } from "../../API/api";
-import axios from "axios";
 import Search from "../../components/Search/Search";
+import Loader from "../../components/Loader/Loader";
 
 const SchedulePage = () => {
-  const { schedule, feed } = useAniContext();
-  const [searchAnime, setSearchAnime] = useState("");
+  const { schedule, feed, loading } = useAniContext();
 
   const newAnime = schedule?.map((el) => el.list);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -19,21 +20,21 @@ const SchedulePage = () => {
           <h1 className="text-3xl text-center py-[10px] px-[90px] my-2 bg-slate-600 rounded-2xl">
             Новые эпизоды
           </h1>
-          <div className="flex justify-center items-center flex-wrap gap-[30px]">
+          <div className="flex items-center gap-[45px]  flex-wrap">
             {feed.map((newEpi, index) => (
               <TitleCard key={index} el={newEpi.title} />
             ))}
           </div>
 
           <div className="">
-            <h1 className="text-3xl text-center py-[10px] px-[90px] my-2 bg-slate-600 rounded-2xl">
-              Расписание релизов{" "}
+            <h1 className="text-2xl text-center py-[10px] px-[90px] my-2 bg-slate-600 rounded-2xl">
+              Расписание релизов
             </h1>
             <div className="py-4">
               <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Понедельник
               </h1>
-              <div className="flex flex-wrap gap-[20px]">
+              <div className="flex items-center gap-[45px] flex-wrap">
                 {newAnime[0]?.map((anime, index) => (
                   <TitleCard el={anime} key={index} />
                 ))}
@@ -43,7 +44,7 @@ const SchedulePage = () => {
               <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Вторник
               </h1>
-              <div className="flex flex-wrap gap-[30px]">
+              <div className="flex items-center gap-[45px]  flex-wrap">
                 {newAnime[1]?.map((anime, index) => (
                   <TitleCard el={anime} key={index} />
                 ))}
@@ -53,7 +54,7 @@ const SchedulePage = () => {
               <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Среда
               </h1>
-              <div className="flex flex-wrap gap-[30px]">
+              <div className="flex items-center gap-[45px]  flex-wrap">
                 {newAnime[2]?.map((anime, index) => (
                   <TitleCard el={anime} key={index} />
                 ))}
@@ -63,7 +64,7 @@ const SchedulePage = () => {
               <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Четверг
               </h1>
-              <div className="flex flex-wrap gap-[30px]">
+              <div className="flex items-center gap-[45px]  flex-wrap">
                 {newAnime[3]?.map((anime, index) => (
                   <TitleCard el={anime} key={index} />
                 ))}
@@ -73,7 +74,7 @@ const SchedulePage = () => {
               <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Пятница
               </h1>
-              <div className="flex flex-wrap gap-[30px]">
+              <div className="flex items-center gap-[45px]  flex-wrap">
                 {newAnime[4]?.map((anime, index) => (
                   <TitleCard el={anime} key={index} />
                 ))}
@@ -83,7 +84,7 @@ const SchedulePage = () => {
               <h1 className="text-2xl text-center bg-red-500 rounded-2xl my-5">
                 Суббота
               </h1>
-              <div className="flex flex-wrap gap-[30px]">
+              <div className="flex items-center gap-[45px]  flex-wrap">
                 {newAnime[5]?.map((anime, index) => (
                   <TitleCard el={anime} key={index} />
                 ))}
@@ -102,11 +103,7 @@ const SchedulePage = () => {
           </div>
         </div>
       ) : (
-        <div className="flex justify-center items-center h-screen gap-[40px]">
-          <div className="rounded-full h-20 w-20 bg-green-500 animate-ping"></div>
-          <div className="rounded-full h-20 w-20 bg-red-500 animate-ping"></div>
-          <div className="rounded-full h-20 w-20 bg-violet-500 animate-ping"></div>
-        </div>
+        <Loader />
       )}
     </>
   );

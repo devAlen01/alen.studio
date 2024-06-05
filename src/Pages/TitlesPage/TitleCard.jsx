@@ -6,7 +6,7 @@ const TitleCard = ({ el }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-slate-700/90 rounded-xl hover:bg-red-800">
+    <div className="bg-slate-700/90 rounded-xl hover:bg-slate-800">
       {el !== undefined ? (
         <div
           onClick={() => navigate(`/title/${el?.code}`)}

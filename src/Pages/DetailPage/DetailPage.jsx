@@ -1,120 +1,120 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { IMG_API, VIDEO_HOST } from "../../API/api";
 import ReactPlayer from "react-player";
 import { useAniContext } from "../../context/AniContext";
+import Loader from "../../components/Loader/Loader";
 
 const DetailPage = () => {
-  const { getTitle, title, episode } = useAniContext();
+  const { getTitle, title, episode, loading } = useAniContext();
   const [activeEpisode, setActiveEpisode] = useState(1);
-  const navigate = useNavigate();
+  const [video, setVideo] = useState("hd");
   const { code } = useParams();
-
-  const [video, setVideo] = useState("sd");
 
   useEffect(() => {
     getTitle(code);
   }, [code]);
 
-  if (!code) {
-    console.log("Loading");
+  if (loading) {
+    return <Loader />;
   }
 
+  console.log(title);
+
   return (
-    <div className="p-6 ">
+    <div className="">
       {title ? (
         <div>
-          <div className="">
-            <button
-              className="text-violet-400 hover:text-violet-800"
-              onClick={() => navigate("/")}
-            >
-              Главная страница
-            </button>
+          <div className="mb-8">
+            <div className=" flex flex-col gap-2 pb-3 text-xl max-sm:text-[14px] text-red-600 max-sm:w-[200px]">
+              <Link to="/">Главная страница</Link>
+              <Link to="/titles">Список тайтлов</Link>
+            </div>
 
-            <br />
-            <button
-              className="text-violet-400 hover:text-violet-800"
-              onClick={() => navigate("/titles")}
-            >
-              К списку
-            </button>
-          </div>
-          <h1 className="sm:text-[10px] sm:bg-red-500 sm:rounded-lg   lg:text-3xl  text-center py-4">
-            {title?.names.ru}
-          </h1>
-          <div className="flex w-full py-4 justify-center items-center ">
-            <div className="w-full p-6 text-xs">
-              <div className=" p-2 bg-red-600 w-full h-full  flex justify-center">
+            <h1 className="text-[22px] md:test-2xl text-center p-3">
+              {title.names.ru}
+            </h1>
+            <div className="flex flex-col items-center gap-5 md:flex-row md:items-start">
+              <div className="flex flex-col gap-1 w-full md:w-1/3 rounded-lg">
                 <img
-                  width={500}
-                  src={`${IMG_API}/${title?.posters.original.url}`}
-                  alt={title.names.ru}
+                  src={IMG_API + title?.posters.original.url}
+                  alt={title?.names.ru}
                 />
-              </div>
-              <div className="w-ful">
-                Жанр:
-                {title?.genres.map((el, index) => (
-                  <span key={index} className="px-1 ">
-                    {el}
+                <div className="w-ful px-2">
+                  Жанр:
+                  {title?.genres.map((el, index) => (
+                    <span
+                      key={index}
+                      className="p-[2px] mx-[2px] w-full rounded-md bg-red-500 "
+                    >
+                      {el}
+                    </span>
+                  ))}
+                  <br />
+                  <span>
+                    Сезон: {title?.season.year} / {title?.season.string}
                   </span>
-                ))}
+                </div>
               </div>
-              <br />
-              <span>
-                Год: {title?.season.year} / {title?.season.string}
-              </span>
+              <p className="text-justify md:w-2/3">{title?.description}</p>
             </div>
-            <p className="px-2 w-full h-full max-sm:text-[9px]">
-              {title?.description}
-            </p>
           </div>
-
-          <div className=" flex justify-center flex-col items-center">
-            <div className=" w-[640px] py-3 flex justify-between items-center">
-              <select
-                onChange={(e) => setActiveEpisode(e.target.value)}
-                value={activeEpisode}
-                className="bg-purple-800 rounded-lg p-2"
-              >
-                {episode.map((episode, index) => (
-                  <option value={episode.episode} key={index}>
-                    Эпизод: {episode.episode}
+          <div className=" p-5">
+            <div className="p-5 bg-slate-300/20 rounded-lg w-full">
+              <div className="text-center">
+                <select
+                  value={activeEpisode}
+                  onChange={(e) => setActiveEpisode(e.target.value)}
+                  className=" bg-slate-800 p-1 m-1 w-[200px] truncate rounded-lg outline-none cursor-pointer text-white"
+                >
+                  {episode?.map((episode, index) => (
+                    <option
+                      key={index}
+                      value={episode?.episode}
+                      className="bg-slate-700 text-white"
+                    >
+                      Серия {episode?.episode}: {episode?.name}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  onChange={(e) => setVideo(e.target.value)}
+                  className="mt-4 bg-slate-800 p-1 rounded-lg outline-none cursor-pointer text-white"
+                >
+                  <option value="sd" className="bg-slate-700 text-white">
+                    SD
                   </option>
-                ))}
-              </select>
-              <select
-                onChange={(e) => setVideo(e.target.value)}
-                className="bg-purple-800 rounded-lg p-2"
-              >
-                <option value="sd">SD</option>
-                <option value="fhd">FHD</option>
-                <option value="hd">HD</option>
-              </select>
-            </div>
-            <div className=" pb-[40px]">
+                  <option value="hd" className="bg-slate-700 text-white">
+                    HD
+                  </option>
+                  <option value="fhd" className="bg-slate-700 text-white">
+                    FHD
+                  </option>
+                </select>
+              </div>
+
               {episode?.map((play, index) =>
                 play?.episode == activeEpisode ? (
                   <div
                     key={index}
-                    className=" w-full bg-red-500 p-3 flex justify-center items-center"
+                    className=" flex justify-center items-center"
                   >
                     <ReactPlayer
                       url={`${VIDEO_HOST}/${play?.hls[video]}`}
+                      width="100%"
+                      height="100%"
                       controls
                     />
                   </div>
-                ) : null
+                ) : (
+                  ""
+                )
               )}
             </div>
           </div>
         </div>
       ) : (
-        <div className="flex justify-center items-center h-screen gap-[40px]">
-          <div className="rounded-full h-20 w-20 bg-green-500 animate-ping"></div>
-          <div className="rounded-full h-20 w-20 bg-red-500 animate-ping"></div>
-          <div className="rounded-full h-20 w-20 bg-violet-500 animate-ping"></div>
-        </div>
+        <Loader />
       )}
     </div>
   );

@@ -1,23 +1,15 @@
-import React, { useState } from "react";
-import { API } from "../../API/api";
-import axios from "axios";
 import TitleCard from "../../Pages/TitlesPage/TitleCard";
+import { useAniContext } from "../../context/AniContext";
+import Loader from "../Loader/Loader";
 
 const Search = () => {
-  const [searchAnime, setSearchAnime] = useState("");
-  const [title, setTitle] = useState([]);
+  const { setSearchAnime, titleSearch, getSearchTitles, loading } =
+    useAniContext();
 
-  async function getSearchTitles() {
-    let { data } = await axios.get(`${API}/title/search`, {
-      params: {
-        search: searchAnime,
-        items_per_page: 10,
-      },
-    });
-
-    setSearchAnime(data);
-    setTitle(data?.list);
+  if (loading) {
+    return <Loader />;
   }
+
   return (
     <div>
       <div className="flex flex-col justify-center items-center ">
@@ -25,6 +17,9 @@ const Search = () => {
           <input
             className="w-[500px] py-[10px] px-[40px] rounded-xl text-slate-900"
             onChange={(e) => setSearchAnime(e.target.value)}
+            onInput={(e) => {
+              setSearchAnime(e.target.value);
+            }}
             type="text"
             placeholder="Поиск..."
           />
@@ -40,10 +35,17 @@ const Search = () => {
           </button>
         </form>
 
-        <div className="flex flex-wrap w-full gap-[30px]">
-          {title?.map((el, index) => (
-            <TitleCard key={index} el={el} />
-          ))}
+        <div className="">
+          {titleSearch ? (
+            <div className=" flex items-center gap-[45px] flex-wrap mb-9">
+              {titleSearch?.map((el, index) => (
+                <TitleCard key={index} el={el} />
+              ))}
+              <div className="w-[100%] h-2 bg-red-800"></div>
+            </div>
+          ) : (
+            <Loader />
+          )}
         </div>
       </div>
     </div>

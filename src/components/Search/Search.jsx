@@ -1,6 +1,7 @@
 import TitleCard from "../../Pages/TitlesPage/TitleCard";
 import { useAniContext } from "../../context/AniContext";
 import Loader from "../Loader/Loader";
+import { motion } from "framer-motion";
 
 const Search = () => {
   const { setSearchAnime, titleSearch, getSearchTitles, loading } =
@@ -15,6 +16,11 @@ const Search = () => {
       <div className="flex flex-col justify-center items-center ">
         <form className="py-8">
           <input
+            animate={{
+              scale: [1, 2, 2, 1, 1],
+              rotate: [0, 0, 270, 270, 0],
+              borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+            }}
             className="w-[500px] py-[10px] px-[40px] rounded-xl text-slate-900"
             onChange={(e) => setSearchAnime(e.target.value)}
             onInput={(e) => {
@@ -23,7 +29,9 @@ const Search = () => {
             type="text"
             placeholder="Поиск..."
           />
-          <button
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             className="text-white border-2 py-[9px] px-[40px] mx-2 rounded-xl bg-slate-600 focus:bg-red-900"
             onClick={(e) => {
               e.preventDefault();
@@ -32,7 +40,7 @@ const Search = () => {
             }}
           >
             Поиск
-          </button>
+          </motion.button>
         </form>
 
         <div className="">

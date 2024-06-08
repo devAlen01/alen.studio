@@ -20,10 +20,8 @@ const TitleCard = ({ el }) => {
 
   return (
     <motion.div
-      whileHover={{
-        scale: 1.04,
-        color: "orange",
-      }}
+      whileHover={{ scale: 1.06 }}
+      whileTap={{ scale: 0.9 }}
       variants={cardVariants}
       initial="hidden"
       animate="visible"
@@ -35,7 +33,7 @@ const TitleCard = ({ el }) => {
           onClick={() => navigate(`/title/${el?.code}`)}
           className=" p-3 flex flex-col justify-center items-center"
         >
-          <img
+          <motion.img
             className="w-[210px] rounded-lg "
             src={`${IMG_API}/${el?.posters?.original?.url}`}
             alt={el?.names?.ru}

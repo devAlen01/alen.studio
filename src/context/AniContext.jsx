@@ -23,7 +23,7 @@ const AniContextProvider = ({ children }) => {
     try {
       let { data } = await axios.get(`${API}/title/updates`, {
         params: {
-          items_per_page: 15,
+          items_per_page: 10,
           page: activePage,
         },
       });

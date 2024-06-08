@@ -1,12 +1,35 @@
 import React from "react";
 import { IMG_API } from "../../API/api";
 import { useNavigate } from "react-router-dom";
+import { delay, motion } from "framer-motion";
 
 const TitleCard = ({ el }) => {
   const navigate = useNavigate();
 
+  const cardVariants = {
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      x: 0,
+      transition: {
+        delay: i * 90,
+      },
+    }),
+    hidden: { opacity: 0, y: -500, x: 300 },
+  };
+
   return (
-    <div className="bg-slate-700/90 rounded-xl hover:bg-slate-800">
+    <motion.div
+      whileHover={{
+        scale: 1.04,
+        color: "orange",
+      }}
+      variants={cardVariants}
+      initial="hidden"
+      animate="visible"
+      custom={el}
+      className="bg-slate-700/90 rounded-xl hover:bg-slate-800"
+    >
       {el !== undefined ? (
         <div
           onClick={() => navigate(`/title/${el?.code}`)}
@@ -23,7 +46,7 @@ const TitleCard = ({ el }) => {
           </h2>
         </div>
       ) : null}
-    </div>
+    </motion.div>
   );
 };
 

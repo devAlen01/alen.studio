@@ -14,7 +14,7 @@ function App() {
           <Route path="/" element={<SchedulePage />} index />
           <Route path="/titles" element={<TitlesPage />} />
           <Route path="/title/:code" element={<DetailPage />} />
-          <Route path="*" element={<Error />} />
+          <Route path="/*" element={<Error />} />
         </Route>
       </Routes>
     </>

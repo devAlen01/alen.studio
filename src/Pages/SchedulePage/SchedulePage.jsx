@@ -1,10 +1,9 @@
 import { useAniContext } from "../../context/AniContext";
 import TitleCard from "../TitlesPage/TitleCard";
-import Search from "../../components/Search/Search";
 import Loader from "../../components/Loader/Loader";
 
 const SchedulePage = () => {
-  const { schedule, feed, loading } = useAniContext();
+  const { schedule, feed, loading, error } = useAniContext();
 
   const newAnime = schedule?.map((el) => el.list);
 
@@ -16,11 +15,10 @@ const SchedulePage = () => {
     <>
       {newAnime.length ? (
         <div className=" flex justify-center items-center flex-col">
-          <Search />
-          <h1 className="text-3xl text-center py-[10px] px-[90px] my-2 bg-slate-600 rounded-2xl">
+          <h1 className="text-3xl text-center mb-6 py-[10px] px-[90px] my-2 bg-slate-600 rounded-2xl">
             Новые эпизоды
           </h1>
-          <div className="flex items-center gap-[45px]  flex-wrap">
+          <div className="flex items-center gap-[35px] my-5  flex-wrap">
             {feed.map((newEpi, index) => (
               <TitleCard key={index} el={newEpi.title} />
             ))}
@@ -103,7 +101,9 @@ const SchedulePage = () => {
           </div>
         </div>
       ) : (
-        <Loader />
+        <div className="">
+          <div className="mt-[20%] text-3xl">{error}</div>
+        </div>
       )}
     </>
   );

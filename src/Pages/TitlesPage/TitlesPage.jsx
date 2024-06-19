@@ -6,8 +6,15 @@ import Search from "../../components/Search/Search";
 import Loader from "../../components/Loader/Loader";
 
 const TitlesPage = () => {
-  const { titles, pagination, setActivePage, activePage, loading } =
-    useAniContext();
+  const {
+    titles,
+    pagination,
+    setActivePage,
+    activePage,
+    titleSearch,
+    loading,
+    error,
+  } = useAniContext();
 
   if (loading) {
     return <Loader />;
@@ -19,8 +26,8 @@ const TitlesPage = () => {
         <>
           <Search />
           <div className="  flex items-center gap-[45px]  flex-wrap">
-            {titles.map((el, index) => (
-              <TitleCard key={index} el={el} />
+            {titles?.map((el, index) => (
+              <TitleCard el={el} key={index} />
             ))}
           </div>
 
@@ -34,7 +41,7 @@ const TitlesPage = () => {
           </div>
         </>
       ) : (
-        <Loader />
+        <div className="mt-[20%] text-3xl">{error}</div>
       )}
     </div>
   );

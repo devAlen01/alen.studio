@@ -6,7 +6,7 @@ import { useAniContext } from "../../context/AniContext";
 import Loader from "../../components/Loader/Loader";
 
 const DetailPage = () => {
-  const { getTitle, title, episode, loading } = useAniContext();
+  const { getTitle, title, episode, loading, error } = useAniContext();
   const [activeEpisode, setActiveEpisode] = useState(1);
   const [video, setVideo] = useState("hd");
   const { code } = useParams();
@@ -114,7 +114,7 @@ const DetailPage = () => {
           </div>
         </div>
       ) : (
-        <Loader />
+        <div className="mt-[20%] text-3xl">{error}</div>
       )}
     </div>
   );

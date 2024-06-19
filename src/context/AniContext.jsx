@@ -17,6 +17,7 @@ const AniContextProvider = ({ children }) => {
   const [searchAnime, setSearchAnime] = useState("");
   const [titleSearch, setTitleSearch] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState();
 
   async function getTitles() {
     setLoading(true);
@@ -31,7 +32,7 @@ const AniContextProvider = ({ children }) => {
       setPagination(data.pagination);
       console.log(data);
     } catch (error) {
-      console.error(error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -45,7 +46,7 @@ const AniContextProvider = ({ children }) => {
       setTitle(data);
       setEpisode(animeList);
     } catch (error) {
-      console.error(error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -57,7 +58,7 @@ const AniContextProvider = ({ children }) => {
       let { data } = await axios.get(`${API}/title/schedule`);
       setSchedule(data);
     } catch (error) {
-      console.error(error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -69,14 +70,13 @@ const AniContextProvider = ({ children }) => {
       let { data } = await axios.get(`${API}/feed`);
       setFeed(data?.list);
     } catch (error) {
-      console.error(error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
   }
 
   async function getSearchTitles() {
-    setLoading(true);
     try {
       let { data } = await axios.get(`${API}/title/search`, {
         params: {
@@ -87,9 +87,7 @@ const AniContextProvider = ({ children }) => {
       setSearchAnime(data);
       setTitleSearch(data?.list);
     } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+      setError(error.message);
     }
   }
 
@@ -120,7 +118,9 @@ const AniContextProvider = ({ children }) => {
     titleSearch,
     getSearchTitles,
     setSearchAnime,
+    searchAnime,
     loading,
+    error,
   };
 
   return (

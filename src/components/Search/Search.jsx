@@ -4,8 +4,14 @@ import Loader from "../Loader/Loader";
 import { motion } from "framer-motion";
 
 const Search = () => {
-  const { setSearchAnime, titleSearch, getSearchTitles, loading } =
-    useAniContext();
+  const {
+    setSearchAnime,
+    searchAnime,
+    titleSearch,
+    getSearchTitles,
+    loading,
+    error,
+  } = useAniContext();
 
   if (loading) {
     return <Loader />;
@@ -16,14 +22,8 @@ const Search = () => {
       <div className="flex flex-col justify-center items-center ">
         <form className="py-8">
           <input
-            animate={{
-              scale: [1, 2, 2, 1, 1],
-              rotate: [0, 0, 270, 270, 0],
-              borderRadius: ["20%", "20%", "50%", "50%", "20%"],
-            }}
             className="w-[500px] py-[10px] px-[40px] rounded-xl text-slate-900"
-            onChange={(e) => setSearchAnime(e.target.value)}
-            onInput={(e) => {
+            onChange={(e) => {
               setSearchAnime(e.target.value);
             }}
             type="text"
@@ -44,15 +44,17 @@ const Search = () => {
         </form>
 
         <div className="">
-          {titleSearch ? (
+          {titleSearch.length ? (
             <div className=" flex items-center gap-[45px] flex-wrap mb-9">
               {titleSearch?.map((el, index) => (
-                <TitleCard key={index} el={el} />
+                <TitleCard el={el} key={index} />
               ))}
               <div className="w-[100%] h-2 bg-red-800"></div>
             </div>
           ) : (
-            <Loader />
+            <div className="mt-[20%] mb-[20%] text-3xl">
+              {error ? "Ничего не найдено" : null}
+            </div>
           )}
         </div>
       </div>

@@ -30,7 +30,6 @@ const AniContextProvider = ({ children }) => {
       });
       setTitles(data.list);
       setPagination(data.pagination);
-      console.log(data);
     } catch (error) {
       setError(error.message);
     } finally {

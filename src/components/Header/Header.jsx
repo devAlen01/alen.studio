@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <div className="sticky top-0 z-30 py-3">
-      <div className="py-[20px] bg-cyan-950 text-white font-mono rounded-2xl shadow-2xl">
+      <div className="py-[20px] bg-cyan-950 text-white font-mono rounded-2xl shadow-orange-500">
         <div className="flex justify-between items-center px-5 md:px-9">
           <Link className="text-bold text-xl md:text-2xl font-bold">
             A.Studio

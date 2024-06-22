@@ -14,6 +14,7 @@ const TitlesPage = () => {
     titleSearch,
     loading,
     error,
+    title,
   } = useAniContext();
 
   if (loading) {

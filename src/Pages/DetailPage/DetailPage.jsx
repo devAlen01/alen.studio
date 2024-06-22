@@ -39,6 +39,7 @@ const DetailPage = () => {
                 <img
                   src={IMG_API + title?.posters.original.url}
                   alt={title?.names.ru}
+                  width={400}
                 />
                 <div className="w-ful px-2">
                   Жанр:
@@ -97,7 +98,7 @@ const DetailPage = () => {
                 play?.episode == activeEpisode ? (
                   <div
                     key={index}
-                    className=" flex justify-center items-center"
+                    className=" flex justify-center items-center w-[60%] mx-auto"
                   >
                     <ReactPlayer
                       url={`${VIDEO_HOST}/${play?.hls[video]}`}
